@@ -1,2 +1,5 @@
-# simplex
-The simplex algorithm written in C
+# Simplex
+
+The simplex algorithm written in C.
+
+
