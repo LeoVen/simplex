@@ -1,0 +1,3 @@
+[submodule "C-Macro-Collections"]
+	path = lib/C-Macro-Collections
+	url = https://github.com/LeoVen/C-Macro-Collections
