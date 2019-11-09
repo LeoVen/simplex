@@ -22,6 +22,26 @@
  * THE SOFTWARE.
  */
 
+/* Presets */
+const $operatorOptions = $('<select>').html([
+    $('<option>').attr('value', '<=').text('<='),
+    $('<option>').attr('value', '=').text('='),
+    $('<option>').attr('value', '>=').text('>=')])
+
+/* Builders */
+function objFuncInput(i) {
+    return $('<input>').attr('id', `objF-${i}`).attr('type', 'number').attr('value', '0')
+}
+
+function makeObjectiveFunction(nVar) {
+    let result = Array(nVar);
+
+    for (let i = 0; i < nVar; i++)
+        result[i] = objFuncInput(i);
+
+    return result;
+}
+
 $(document).ready(function () {
 
     $('.modal').modal();
@@ -44,16 +64,7 @@ function generateTable() {
     $objectiveFunction.html('');
     $constraints.html('');
 
-    let $operatorOptions = $('<select>').html([
-        $('<option>').attr('value', '<=').text('<='),
-        $('<option>').attr('value', '=').text('='),
-        $('<option>').attr('value', '>=').text('>=')])
-
-    for (let i = 0; i < numberOfVariables; i++) {
-        $objectiveFunction.append($('<input>').attr('id', `objF-${1}`)
-            .attr('type', 'number')
-            .attr('value', '0'));
-    }
+    $objectiveFunction.append(makeObjectiveFunction(numberOfVariables));
 
     for (let i = 0; i < numberOfConstraints; i++) {
         let $rows = Array(numberOfVariables + 2);
