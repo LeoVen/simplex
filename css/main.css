@@ -55,3 +55,10 @@
     width: 4em !important;
     margin: 5px !important;
 }
+
+.main-content {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: auto;
+}
