@@ -29,6 +29,7 @@ $(document).ready(function () {
 
     $('#numberOfVariables').on('change', (event) => changeVariables());
     $('#numberOfConstraints').on('change', (event) => changeConstraints());
+    $('#calculate').on('click', (event) => calculateSimplex());
 
     changeConstraints();
     changeVariables();
@@ -100,8 +101,8 @@ function changeVariables() {
         // For each constraint, add input variables
         $constraints.each(function (i) {
             for (let j = 0; j < (numberOfVariables - totalVariables); j++) {
-                let lastInput = $($(this).eq(0).children()[$(this).eq(0).children().length - 3]);
-                $('<input>').attr('id', `c-${i}-${numberOfVariables + j - 1}`).attr('type', 'number').attr('value', '0').insertAfter(lastInput);
+                let lastInput = $(this).children().eq($(this).children().length - 3);
+                lastInput.after($('<input>').attr('id', `c-${i}-${numberOfVariables + j - 1}`).attr('type', 'number').attr('value', '0'));
             }
         });
     }
@@ -162,8 +163,45 @@ function getSimplexTable() {
     /**
      * [n x m] matrix where
      * n = number of constraints
-     * m = number of variables + 1 (b)
+     * m = number of variables
      */
-    let constraints = Array(numberOfConstraints).fill(Array(numberOfVariables + 1).fill(0));
+    let constraints = Array(numberOfConstraints).fill(undefined);
+
+    for (let i = 0; i < constraints.length; i++) {
+        constraints[i] = Array(numberOfVariables).fill(0).slice();
+    }
+
+    for (let i = 0; i < numberOfConstraints; i++) {
+        for (let j = 0; j < numberOfVariables; j++) {
+            constraints[i][j] = $(`#c-${i}-${j}`).val() * 1;
+        }
+    }
+
+    /**
+     * b is the value after the <=, = or >= sign
+     */
+    let b = Array(numberOfConstraints).fill(0);
+
+    for (let i = 0; i < numberOfConstraints; i++) {
+        b[i] = $(`#b-${i}`).val() * 1;
+    }
+
+    /**
+     * Operator of the constraint (can either be <=, =, >=)
+     */
+    let operators = Array(numberOfConstraints).fill('<=');
+
+    for (let i = 0; i < numberOfConstraints; i++) {
+        operators[i] = $(`#op-${i}`).val();
+    }
+
+    return [objectiveFunction, constraints, operators, b];
+}
+
+function calculateSimplex() {
+    console.log(getSimplexTable());
+}
+
+function simplex() {
 
 }
