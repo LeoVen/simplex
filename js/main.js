@@ -36,20 +36,39 @@ $(document).ready(function () {
 
 });
 
-/* Presets */
+/* -------------------------------------------------------------------------------------------------
+ * Dynamic Form
+ ------------------------------------------------------------------------------------------------ */
 const $operatorOptions = $('<select>').html([
     $('<option>').attr('value', '<=').text('<='),
     $('<option>').attr('value', '=').text('='),
     $('<option>').attr('value', '>=').text('>=')]);
 
-/* Builders */
-function makeObjectiveFunction(nVar) {
-    let result = Array(nVar);
+// Builds the nth input of the objective function
+function makeObjFunInput(i) {
+    return $('<div>')
+        .addClass('valign-wrapper')
+        .addClass('margin-right')
+        .html([
+            $('<input>')
+                .attr('id', `objF-${i}`)
+                .attr('type', 'number')
+                .attr('value', '0'),
+            $('<p>').text(`X${i}`)
+        ]);
+}
 
-    for (let i = 0; i < nVar; i++)
-        result[i] = $('<input>').attr('id', `objF-${i}`).attr('type', 'number').attr('value', '0');
-
-    return result;
+function makeConstraintInput(i, j) {
+    return $('<div>')
+        .addClass('valign-wrapper')
+        .addClass('margin-right')
+        .html([
+            $('<input>')
+                .attr('id', `c-${i}-${j}`)
+                .attr('type', 'number')
+                .attr('value', '0'),
+            $('<p>').text(`X${j}`)
+        ]);
 }
 
 function makeConstraint(i, nVar) {
@@ -57,7 +76,7 @@ function makeConstraint(i, nVar) {
 
     let j = 0;
     for (; j < nVar; j++) {
-        result[j] = $('<input>').attr('id', `c-${i}-${j}`).attr('type', 'number').attr('value', '0');
+        result[j] = makeConstraintInput(i, j);
     }
 
     result[j + 1] = $operatorOptions.clone().attr('id', `op-${i}`);
@@ -81,7 +100,7 @@ function changeVariables() {
         }
     } else {
         for (let i = 0; i < numberOfVariables - objectiveFunctionChildren.length; i++) {
-            $objectiveFunction.append($('<input>').attr('id', `objF-${numberOfVariables + i - 1}`).attr('type', 'number').attr('value', '0'));
+            $objectiveFunction.append(makeObjFunInput(objectiveFunctionChildren.length + i));
         }
     }
 
@@ -102,7 +121,7 @@ function changeVariables() {
         $constraints.each(function (i) {
             for (let j = 0; j < (numberOfVariables - totalVariables); j++) {
                 let lastInput = $(this).children().eq($(this).children().length - 3);
-                lastInput.after($('<input>').attr('id', `c-${i}-${numberOfVariables + j - 1}`).attr('type', 'number').attr('value', '0'));
+                lastInput.after(makeConstraintInput(i, numberOfVariables + j - 1));
             }
         });
     }
@@ -198,6 +217,9 @@ function getSimplexTable() {
     return [objectiveFunction, constraints, operators, b];
 }
 
+/* -------------------------------------------------------------------------------------------------
+ * Simplex algorithm and utilities
+ ------------------------------------------------------------------------------------------------ */
 function calculateSimplex() {
     console.log(getSimplexTable());
 }

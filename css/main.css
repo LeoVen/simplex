@@ -62,3 +62,7 @@
     padding: 0;
     overflow: auto;
 }
+
+.margin-right {
+    margin-right: 40px;
+}
