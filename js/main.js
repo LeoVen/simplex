@@ -30,6 +30,8 @@ $(document).ready(function () {
     $('#numberOfVariables').on('change', (event) => changeVariables());
     $('#numberOfConstraints').on('change', (event) => changeConstraints());
     $('#calculate').on('click', (event) => calculateSimplex());
+    $('#reset').on('click', (event) => resetTable());
+    $('#clear').on('click', (event) => clearTable());
 
     changeConstraints();
     changeVariables();
@@ -215,6 +217,27 @@ function getSimplexTable() {
     }
 
     return [objectiveFunction, constraints, operators, b];
+}
+
+function resetTable() {
+    $('#numberOfVariables').val('1');
+    $('#numberOfConstraints').val('1');
+
+    $('#objectiveFunction').html(makeObjFunInput(0));
+    $('#constraints').html(makeConstraint(0, 1));
+}
+
+function clearTable() {
+    let numberOfVariables = $('#numberOfVariables').val() * 1;
+    let numberOfConstraints = $('#numberOfConstraints').val() * 1;
+
+    for (let i = 0; i < numberOfConstraints; i++) {
+        $(`#b-${i}`).val('0');
+        $(`#objF-${i}`).val('0');
+        for (let j = 0; j < numberOfVariables; j++) {
+            $(`#c-${i}-${j}`).val('0');
+        }
+    }
 }
 
 /* -------------------------------------------------------------------------------------------------
