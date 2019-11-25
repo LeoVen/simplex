@@ -56,6 +56,35 @@ $(document).ready(function () {
 
 });
 
+function add(quantity, variable) {
+    if (variable === 'variable') {
+        let numberOfVariables = $('#numberOfVariables').val() * 1;
+
+        if (numberOfVariables === 1 && quantity < 0) {
+            return;
+        }
+
+        numberOfVariables += quantity > 0 ? 1 : - 1;
+
+        $('#numberOfVariables').val(numberOfVariables);
+
+        SimplexTable.changeVariables();
+
+    } else if (variable === 'constraint') {
+        let numberOfConstraints = $('#numberOfConstraints').val() * 1;
+
+        if (numberOfConstraints === 1 && quantity < 0) {
+            return;
+        }
+
+        numberOfConstraints += quantity > 0 ? 1 : - 1;
+
+        $('#numberOfConstraints').val(numberOfConstraints);
+
+        SimplexTable.changeConstraints();
+    }
+}
+
 function calculateSimplex() {
     SimplexResult.show(Simplex.simplex(SimplexTable.getSimplexTable()));
 }

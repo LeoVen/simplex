@@ -75,3 +75,12 @@
     margin: 2px 0px;
     min-width: 150px;
 }
+
+.number-input {
+    display: flex;
+    justify-content: space-around;
+}
+
+.number-input input {
+    width: 80px !important;
+}

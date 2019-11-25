@@ -28,7 +28,7 @@ THE SOFTWARE.
 <head>
     <meta charset="UTF-8">
     <title>Simplex</title>
-    <!-- <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="css/materialize.css" type="text/css" rel="stylesheet" />
     <link href="css/main.css" type="text/css" rel="stylesheet" />
 </head>
@@ -45,11 +45,18 @@ THE SOFTWARE.
                             <option value="max">Maximize</option>
                             <option value="min">Minimize</option>
                         </select>
-                        <br>
-                        <label for="numberOfVariables">Number of Variables</label>
-                        <input id="numberOfVariables" type="number" min="1" value="1" />
-                        <label for="numberOfConstraints">Number of Constraints</label>
-                        <input id="numberOfConstraints" type="number" min="1" value="1" />
+                        <div class="input-field number-input valign-wrapper">
+                            <a href="javascript:add(-1, 'variable')" class="btn-flat white orange-text"><i class="material-icons">remove</i></a>
+                            <label for="numberOfVariables">Number of Variables</label>
+                            <input id="numberOfVariables" type="number" min="1" value="1" readonly />
+                            <a href="javascript:add(1, 'variable')" class="btn-flat white orange-text"><i class="material-icons">add</i></a>
+                        </div>
+                        <div class="input-field number-input valign-wrapper">
+                            <a href="javascript:add(-1, 'constraint')" class="btn-flat white orange-text"><i class="material-icons">remove</i></a>
+                            <label for="numberOfConstraints">Number of Constraints</label>
+                            <input id="numberOfConstraints" type="number" min="1" value="1" readonly />
+                            <a href="javascript:add(1, 'constraint')" class="btn-flat white orange-text"><i class="material-icons">add</i></a>
+                        </div>
                         <div id="actions" class="center">
                             <a id="clear" class="btn white orange-text">Clear Table</a>
                             <a id="reset" class="btn white orange-text">Reset Table</a>
