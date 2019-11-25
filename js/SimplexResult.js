@@ -33,7 +33,7 @@ SimplexResult.show = function (data) {
     SimplexResult.output.html('<h4>Result</h4>');
 
     if (data.failed) {
-        SimplexResult.output('Could not solve the Linear Program in ' + data.iters + ' iterations');
+        SimplexResult.output.append('Could not solve the Linear Program in ' + data.iter + ' iterations');
     } else {
         SimplexResult.showInitialLinearProgram(data);
         SimplexResult.showResults(data);
