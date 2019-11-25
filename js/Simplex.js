@@ -155,7 +155,7 @@ Simplex.addSlack = function (data, i) {
 
     result[i] = 1;
 
-    data.columns.push(`Sl${data.slack.length}`);
+    data.columns.push(`SL<sub>${data.slack.length}</sub>`);
     data.slack.push(result);
 }
 
@@ -166,7 +166,7 @@ Simplex.addSurplus = function (data, i) {
 
     result[i] = - 1;
 
-    data.columns.push(`Sp${data.surplus.length}`);
+    data.columns.push(`SP<sub>${data.surplus.length}</sub>`);
     data.surplus.push(result);
 }
 
@@ -237,7 +237,8 @@ Simplex.findPivotCol = function (data) {
 
 // Returns the index of pivot row
 Simplex.findPivotRow = function (data, pivotColIndex) {
-    let t = data.b.slice();
+    // Last column contains b
+    let t = Simplex.getColumn(data.matrix, data.matrix[0].length - 1).slice(1);
     let pivotColumn = Simplex.getColumn(data.matrix, pivotColIndex).slice(1);
 
     // pivotColumn and t should be of the same dimension
@@ -267,4 +268,32 @@ Simplex.getColumn = function (matrix, columnIndex) {
     }
 
     return result;
+}
+
+Simplex.isBasic = function (column) {
+    let found1 = false;
+
+    for (let i = 0; i < column.length; i++) {
+        if (column[i] !== 1 && column[i] !== 0) {
+            return true;
+        } else {
+            if (found1 && column[i] === 1) {
+                return true;
+            } else if (column[i] === 1) {
+                found1 = true;
+            }
+        }
+    }
+
+    return false;
+}
+
+Simplex.valueOfNonBasic = function (matrix, columnIndex) {
+    let column = Simplex.getColumn(matrix, columnIndex);
+
+    if (Simplex.isBasic(column)) {
+        return NaN;
+    }
+
+    return matrix[column.indexOf(1)][matrix[0].length - 1];
 }

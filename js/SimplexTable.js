@@ -44,7 +44,7 @@ SimplexTable.makeObjFunInput = function (i) {
                 .attr('id', `objF-${i}`)
                 .attr('type', 'number')
                 .attr('value', '0'),
-            $('<p>').text(`X${i}`)
+            $('<p>').html(`X<sub>${i}</sub>`)
         ]);
 }
 
@@ -58,7 +58,7 @@ SimplexTable.makeConstraintInput = function (i, j) {
                 .attr('id', `c-${i}-${j}`)
                 .attr('type', 'number')
                 .attr('value', '0'),
-            $('<p>').text(`X${j}`)
+            $('<p>').html(`X<sub>${j}</sub>`)
         ]);
 }
 
@@ -209,7 +209,7 @@ SimplexTable.getSimplexTable = function () {
     let columns = Array(numberOfVariables);
 
     for (let i = 0; i < numberOfVariables; i++) {
-        columns[i] = `X${i}`;
+        columns[i] = `X<sub>${i}</sub>`;
     }
 
     let type = $('#simplexType').val();
@@ -293,7 +293,6 @@ SimplexTable.loadTable = function () {
 }
 
 SimplexTable.saveTable = function () {
-    console.log(SimplexTable.getSimplexTable());
     window.prompt("Save Simplex Table", JSON.stringify(SimplexTable.getSimplexTable()));
 }
 

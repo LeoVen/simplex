@@ -30,38 +30,46 @@ $(document).ready(function () {
 });
 
 SimplexResult.show = function (data) {
-    console.log(data);
     SimplexResult.output.html('<h4>Result</h4>');
 
-    SimplexResult.showInitialLinearProgram(data);
-    SimplexResult.showResults(data);
-    SimplexResult.showFinalResult(data);
+    if (data.failed) {
+        SimplexResult.output('Could not solve the Linear Program in ' + data.iters + ' iterations');
+    } else {
+        SimplexResult.showInitialLinearProgram(data);
+        SimplexResult.showResults(data);
+        SimplexResult.showFinalResult(data);
+    }
 }
 
 SimplexResult.showInitialLinearProgram = function (data) {
 
-    let objFunction = $('<p>').html([
+    let result = $('<ul>').addClass('collection').addClass('with-header');
+
+    let header = $('<li>').addClass('collection-header').html('<b>Initial Linear Program</b>');
+
+    let objFunction = $('<li>').addClass('collection-item').html([
         data.type === 'max' ? 'Maximize Z = ' : 'Minimize Z = ',
-        data.objectiveFunction.map((val, i) => `${val} * X${i}`).join(' + ')
+        data.objectiveFunction.map((val, i) => `${val} * X<sub>${i}</sub>`).join(' + ')
     ]);
 
     let constraintsText = $('<div>').html(() =>
-        data.constraints.map((c, ci) => $('<p>').html([
-            c.map((val, i) => `${val} * X${i}`).join(' + '),
-            " ",
-            data.operators[ci],
-            " ",
-            data.b[ci]
-        ]))
+        [
+            $('<li>').addClass('collection-item').html('Subject To:'),
+            ...data.constraints.map((c, ci) => $('<li>')
+                .addClass('collection-item')
+                .html([
+                    c.map((val, i) => `${val} * X<sub>${i}</sub>`).join(' + '),
+                    " ",
+                    data.operators[ci],
+                    " ",
+                    data.b[ci]
+                ]))
+        ]
     );
 
-    SimplexResult.output.append(
-        $('<div>').html([
-            $('<p>').text('Initial Linear Program'),
-            objFunction,
-            constraintsText
-        ])
-    );
+    result.append(header, objFunction, constraintsText);
+
+    SimplexResult.output.append($('<div>').html([result]));
 }
 
 SimplexResult.showResults = function (data) {
@@ -80,9 +88,10 @@ SimplexResult.showResults = function (data) {
             pInfo.pivotColIndex,
             true);
 
-        console.log(pInfo);
-
         result.push(table);
+
+        result.push($('<h5>').text(`Solution ${i}`));
+        result.push(SimplexResult.buildAnswer(data, i));
     }
 
     SimplexResult.output.append(result);
@@ -99,6 +108,10 @@ SimplexResult.showFinalResult = function (data) {
     let table = SimplexResult.transformMatrixToTable(data.columns, lastResult.matrix, 0, 0, false);
 
     result.push(table);
+
+    result.push(SimplexResult.buildAnswer(data, data.steps.length - 1));
+
+    result.push('<hr>');
 
     SimplexResult.output.append(result);
 }
@@ -148,6 +161,33 @@ SimplexResult.getColorClass = function (row, col, pivotRow, pivotCol, color) {
 }
 
 // Build basic and non basic variables and Z value
-SimplexResult.getVariables = function (data) {
+SimplexResult.buildAnswer = function (data, nthStep) {
+    let targetMatrix = data.steps[nthStep].matrix;
 
+    let result = $('<ul>').addClass('collection');
+
+    let valueZ = $('<li>')
+        .addClass('collection-item')
+        .text(`Value of Z: ${targetMatrix[0][targetMatrix[0].length - 1].toFixed(2)}`);
+
+    let basicVar = $('<li>').addClass('collection-item').append('Basic Variables: <br>');
+    let nonBasicVar = $('<li>').addClass('collection-item').append('Non-Basic Variables: <br>');
+
+    // For each column check if they are in the basic or not
+    // except for the first and last ones
+    for (let i = 1; i < targetMatrix[0].length - 1; i++) {
+
+        let col = Simplex.getColumn(targetMatrix, i);
+
+        // Skip first row where the objective function is
+        if (Simplex.isBasic(col.slice(1))) {
+            basicVar.append(`${data.columns[i]} = 0 <br>`);
+        } else {
+            nonBasicVar.append(`${data.columns[i]} = ${Simplex.valueOfNonBasic(targetMatrix, i).toFixed(2)} <br>`);
+        }
+    }
+
+    result.html([valueZ, nonBasicVar, basicVar]);
+
+    return result;
 }
