@@ -14,3 +14,9 @@ The simplex algorithm for web.
 * `<=`
 * `=`
 * `>=`
+
+## To-do
+
+* Fix `SimplexTable.changeVariables` (currently only working with changes of 1)
+* Optimize or verify `Simplex.normalize`
+* Add support for minimize

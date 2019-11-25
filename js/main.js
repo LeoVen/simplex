@@ -22,16 +22,16 @@
  * THE SOFTWARE.
  */
 
-if (!SimplexTable) {
-    throw new Error("SimplexTable.js is required");
+if (typeof SimplexTable === 'undefined') {
+    throw new Error("SimplexTable.js is missing");
 }
 
-if (!Simplex) {
-    throw new Error("Simplex.js is required");
+if (typeof Simplex === 'undefined') {
+    throw new Error("Simplex.js is missing");
 }
 
-function calculateSimplex() {
-
+if (typeof SimplexResult === 'undefined') {
+    throw new Error("SimplexResult.js is missing");
 }
 
 $(document).ready(function () {
@@ -41,7 +41,7 @@ $(document).ready(function () {
 
     $('#numberOfVariables').on('change', SimplexTable.changeVariables);
     $('#numberOfConstraints').on('change', SimplexTable.changeConstraints);
-    $('#calculate').on('click', Simplex.calculateSimplex);
+    $('#calculate').on('click', calculateSimplex);
     $('#reset').on('click', SimplexTable.resetTable);
     $('#clear').on('click', SimplexTable.clearTable);
     $('#save').on('click', SimplexTable.saveTable);
@@ -51,3 +51,7 @@ $(document).ready(function () {
     SimplexTable.changeVariables();
 
 });
+
+function calculateSimplex() {
+    SimplexResult.show(Simplex.simplex(SimplexTable.getSimplexTable()));
+}

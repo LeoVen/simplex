@@ -206,11 +206,21 @@ SimplexTable.getSimplexTable = function () {
         operators[i] = $(`#op-${i}`).val();
     }
 
+    let columns = Array(numberOfVariables);
+
+    for (let i = 0; i < numberOfVariables; i++) {
+        columns[i] = `X${i}`;
+    }
+
+    let type = $('#simplexType').val();
+
     return {
+        type: type,
         objectiveFunction: objectiveFunction,
         constraints: constraints,
         operators: operators,
-        b: b
+        b: b,
+        columns: columns
     };
 }
 
@@ -276,6 +286,8 @@ SimplexTable.loadTable = function () {
         }
     }
 
+    $('#simplexType').val(result.type);
+
     // Materialize
     $('select').formSelect();
 }
@@ -286,5 +298,6 @@ SimplexTable.saveTable = function () {
 }
 
 // EXAMPLES
-// {"objectiveFunction":[1,2,3],"constraints":[[4,5,6],[8,9,10],[12,13,14]],"operators":["<=","=",">="],"b":[7,11,15]}
-// {"objectiveFunction":[1,2,3,4,5],"constraints":[[6,7,8,9,10],[12,13,14,15,16],[18,19,20,21,22],[24,25,26,27,28],[30,31,32,33,34],[36,37,38,39,40]],"operators":["<=","=",">=","<=","=",">="],"b":[11,17,23,29,35,41]}
+// {"type":"max","objectiveFunction":[1,2,3],"constraints":[[4,5,6],[8,9,10],[12,13,14]],"operators":["<=","=",">="],"b":[7,11,15],"columns":["X0","X1","X2"]}
+// {"type":"min","objectiveFunction":[1,2,3,4,5],"constraints":[[6,7,8,9,10],[12,13,14,15,16],[18,19,20,21,22],[24,25,26,27,28],[30,31,32,33,34],[36,37,38,39,40]],"operators":["<=","=",">=","<=","=",">="],"b":[11,17,23,29,35,41],"columns":["X0","X1","X2","X3","X4"]}
+// {"type":"max","objectiveFunction":[1,1],"constraints":[[2,1],[1,2]],"operators":["<=","<="],"b":[4,3],"columns":["X0","X1"]}
