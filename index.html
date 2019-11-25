@@ -40,9 +40,7 @@ THE SOFTWARE.
             <div class="card-content main-content">
                 <span class="card-title">Simplex</span>
                 <div class="row">
-                    <div class="col s12 m2">
-                        <p class="center-align">Configure Simplex</p>
-                        <br>
+                    <div class="col s12 m3">
                         <select>
                             <option value="max">Maximize</option>
                             <option value="min">Minimize</option>
@@ -50,17 +48,17 @@ THE SOFTWARE.
                         <br>
                         <label for="numberOfVariables">Number of Variables</label>
                         <input id="numberOfVariables" type="number" min="1" value="1" />
-                        <br>
                         <label for="numberOfConstraints">Number of Constraints</label>
                         <input id="numberOfConstraints" type="number" min="1" value="1" />
-                        <br>
-                        <a id="clear" class="btn-flat white orange-text">Clear Table</a>
-                        <br>
-                        <a id="reset" class="btn-flat white orange-text">Reset Table</a>
-                        <br>
-                        <a id="calculate" class="btn-flat orange white-text">Calculate</a>
+                        <div id="actions" class="center">
+                            <a id="clear" class="btn white orange-text">Clear Table</a>
+                            <a id="reset" class="btn white orange-text">Reset Table</a>
+                            <a id="save" class="btn white orange-text">Save Table</a>
+                            <a id="load" class="btn white orange-text">Load Table</a>
+                            <a id="calculate" class="btn orange white-text">Calculate</a>
+                        </div>
                     </div>
-                    <div class="col s12 m10">
+                    <div class="col s12 m9">
                         <p class="center-align">Simplex Table</p>
                         <br>
                         <p>Objective Function</p>
@@ -70,6 +68,9 @@ THE SOFTWARE.
                         <p>Constraints</p>
                         <div id="constraints">
                         </div>
+                        <br>
+                        <div id="">
+                        </div>
                     </div>
                 </div>
             </div>
@@ -78,6 +79,8 @@ THE SOFTWARE.
 
     <script src="js/jquery-3.4.1.js" type="text/javascript"></script>
     <script src="js/materialize.js" type="text/javascript"></script>
+    <script src="js/SimplexTable.js" type="text/javascript"></script>
+    <script src="js/Simplex.js" type="text/javascript"></script>
     <script src="js/main.js" type="text/javascript"></script>
 </body>
 

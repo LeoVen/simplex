@@ -63,6 +63,15 @@
     overflow: auto;
 }
 
+.main-content .row {
+    margin: 0;
+}
+
 .margin-right {
     margin-right: 40px;
+}
+
+#actions .btn {
+    margin: 2px 0px;
+    min-width: 150px;
 }
