@@ -46,23 +46,27 @@ THE SOFTWARE.
                             <option value="min">Minimize</option>
                         </select>
                         <div class="input-field number-input valign-wrapper">
-                            <a href="javascript:add(-1, 'variable')" class="btn-flat white orange-text"><i class="material-icons">remove</i></a>
+                            <a href="javascript:add(-1, 'variable')" class="btn-flat white orange-text"><i
+                                    class="material-icons">remove</i></a>
                             <label for="numberOfVariables">Number of Variables</label>
                             <input id="numberOfVariables" type="number" min="1" value="1" readonly />
-                            <a href="javascript:add(1, 'variable')" class="btn-flat white orange-text"><i class="material-icons">add</i></a>
+                            <a href="javascript:add(1, 'variable')" class="btn-flat white orange-text"><i
+                                    class="material-icons">add</i></a>
                         </div>
                         <div class="input-field number-input valign-wrapper">
-                            <a href="javascript:add(-1, 'constraint')" class="btn-flat white orange-text"><i class="material-icons">remove</i></a>
+                            <a href="javascript:add(-1, 'constraint')" class="btn-flat white orange-text"><i
+                                    class="material-icons">remove</i></a>
                             <label for="numberOfConstraints">Number of Constraints</label>
                             <input id="numberOfConstraints" type="number" min="1" value="1" readonly />
-                            <a href="javascript:add(1, 'constraint')" class="btn-flat white orange-text"><i class="material-icons">add</i></a>
+                            <a href="javascript:add(1, 'constraint')" class="btn-flat white orange-text"><i
+                                    class="material-icons">add</i></a>
                         </div>
                         <div id="actions" class="center">
                             <a id="clear" class="btn white orange-text">Clear Table</a>
                             <a id="reset" class="btn white orange-text">Reset Table</a>
                             <a id="save" class="btn white orange-text">Save Table</a>
                             <a id="load" class="btn white orange-text">Load Table</a>
-                            <a id="calculate" class="btn orange white-text">Calculate</a>
+                            <a id="calculate" class="btn orange white-text modal-trigger" href="#resultModal">Calculate</a>
                         </div>
                     </div>
                     <div class="col s12 m9">
@@ -81,6 +85,11 @@ THE SOFTWARE.
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+
+    <div id="resultModal" class="modal">
+        <div class="modal-content">
         </div>
     </div>
 

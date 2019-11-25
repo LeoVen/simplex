@@ -55,7 +55,7 @@ Simplex.simplex = function (data) {
     data = Simplex.normalize(data);
 
     // First solution
-    data.steps.push(SimplexUtil.cloneMatrix(data.matrix));
+    data.steps.push({matrix: SimplexUtil.cloneMatrix(data.matrix)});
 
     data.iter = 0;
     data.failed = false;
@@ -63,7 +63,7 @@ Simplex.simplex = function (data) {
     while (!Simplex.isSolved(data.matrix) && data.iter < Simplex.maxIterations) {
         Simplex.pivot(data);
 
-        data.steps.push(SimplexUtil.cloneMatrix(data.matrix));
+        data.steps.push({matrix: SimplexUtil.cloneMatrix(data.matrix)});
 
         data.iter++;
     }
@@ -119,6 +119,7 @@ Simplex.normalize = function (data) {
     data.matrix.length = data.constraints.length;
 
     // Add b column
+    data.columns.push('b');
     for (let i = 0; i < data.matrix.length; i++) {
         data.matrix[i].push(data.b[i]);
     }
@@ -137,6 +138,7 @@ Simplex.normalize = function (data) {
     }
 
     // Add Z column
+    data.columns.unshift('Z');
     for (let i = 0; i < data.matrix.length; i++) {
         data.matrix[i].unshift(0);
     }
