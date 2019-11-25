@@ -20,3 +20,4 @@ The simplex algorithm for web.
 * Fix `SimplexTable.changeVariables` (currently only working with changes of 1)
 * Optimize or verify `Simplex.normalize`
 * Add support for minimize
+* Treat negative RHS
