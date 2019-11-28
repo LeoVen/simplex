@@ -297,6 +297,11 @@ SimplexTable.saveTable = function () {
 }
 
 // EXAMPLES
-// {"type":"max","objectiveFunction":[1,1],"constraints":[[2,1],[1,2]],"operators":["<=","<="],"b":[4,3],"columns":["X0","X1"]}
-// {"type":"max","objectiveFunction":[4,1],"constraints":[[2,3],[2,1]],"operators":["<=","<="],"b":[12,8],"columns":["X0","X1"]}
-// {"type":"max","objectiveFunction":[4,6],"constraints":[[-1,1],[1,1],[2,5]],"operators":["<=","<=","<="],"b":[11,27,90],"columns":["X0","X1"]}
+// {"type":"max","objectiveFunction":[1,1],"constraints":[[2,1],[1,2]],"operators":["<=","<="],"b":[4,3],"columns":["X<sub>0</sub>","X<sub>1</sub>"]}
+// {"type":"max","objectiveFunction":[4,1],"constraints":[[2,3],[2,1]],"operators":["<=","<="],"b":[12,8],"columns":["X<sub>0</sub>","X<sub>1</sub>"]}
+// {"type":"max","objectiveFunction":[3,4],"constraints":[[1,1],[2,1]],"operators":["<=","<="],"b":[4,5],"columns":["X<sub>0</sub>","X<sub>1</sub>"]}
+// {"type":"max","objectiveFunction":[4,6],"constraints":[[-1,1],[1,1],[2,5]],"operators":["<=","<=","<="],"b":[11,27,90],"columns":["X<sub>0</sub>","X<sub>1</sub>"]}
+// {"type":"max","objectiveFunction":[1,1,1],"constraints":[[2,1,-1],[1,1,2],[2,1,3]],"operators":["<=",">=","="],"b":[10,20,60],"columns":["X<sub>0</sub>","X<sub>1</sub>","X<sub>2</sub>"]}
+
+// Currently not working
+// {"type":"min","objectiveFunction":[3,2],"constraints":[[2,1],[1,5]],"operators":[">=",">="],"b":[10,15],"columns":["X<sub>0</sub>","X<sub>1</sub>"]}
